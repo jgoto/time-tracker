@@ -7,3 +7,15 @@ body.light-mode{
     background-color: #fffff0;
     color:#121212;
 }
+
+#heading{
+    display: flex;
+}
+
+#tracker-heading{
+    width: 50%;
+}
+
+#mode-btns{
+    width: 50%;
+}

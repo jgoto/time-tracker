@@ -26,17 +26,12 @@ darkModeBtn.addEventListener("click", ()=>{
     darkModeBtn.disabled=true;
 })
 
-function getTwelveHour(hour){
-    const twentyFourHour = Number.parseInt(hour);
-    if(twentyFourHour>12)
-        return twentyFourHour-12;
-    else
-        return twentyFourHour;        
-}
-
 setInterval(()=>{
     const date = new Date();
-    const currentTime=date;
+    const hours = Number.parseInt(date.getHours() % 12 || 12);
+    const minutes = Number.parseInt(date.getMinutes());
+    const seconds = Number.parseInt(date.getSeconds());
+    const ampm = date.getHours()>12?"PM":"AM";
     const timeSpan=document.getElementById("time-span");
-    timeSpan.innerText=`${getTwelveHour(date.getHours())}:${date.getMinutes()}:${date.getSeconds()}${Number.parseInt(date.getHours())<12? " AM":" PM"}`;
+    timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`;
 }, 1000)
