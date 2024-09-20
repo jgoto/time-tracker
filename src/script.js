@@ -1,7 +1,4 @@
-const date = new Date();
-const currentTime=date;
-const timeSpan=document.getElementById("time-span");
-timeSpan.innerText=currentTime;
+
 const lightModeBtn = document.getElementById("light-mode-btn");
 const darkModeBtn = document.getElementById("dark-mode-btn");
 
@@ -28,3 +25,18 @@ darkModeBtn.addEventListener("click", ()=>{
     darkModeBtn.classList.add("btn-primary");
     darkModeBtn.disabled=true;
 })
+
+function getTwelveHour(hour){
+    const twentyFourHour = Number.parseInt(hour);
+    if(twentyFourHour>12)
+        return twentyFourHour-12;
+    else
+        return twentyFourHour;        
+}
+
+setInterval(()=>{
+    const date = new Date();
+    const currentTime=date;
+    const timeSpan=document.getElementById("time-span");
+    timeSpan.innerText=`${getTwelveHour(date.getHours())}:${date.getMinutes()}:${date.getSeconds()}${Number.parseInt(date.getHours())<12? " AM":" PM"}`;
+}, 1000)
