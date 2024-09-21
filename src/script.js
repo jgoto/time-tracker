@@ -1,8 +1,34 @@
-
 const lightModeBtn = document.getElementById("light-mode-btn");
 const darkModeBtn = document.getElementById("dark-mode-btn");
 const trackBtn = document.getElementById("track-btn");
-let runTracker=false;
+
+class TimeTracker{
+    constructor(){
+        this.runTracker=false;
+        this.tasks = [];
+        this.taskCounter = document.getElementById("task-counter");
+        this.timer=0;
+    }
+
+    startTracker(task){
+        this.runTracker=true;
+        const startTime = new Date();
+        setInterval(()=>{
+            if(this.runTracker){
+                const currentTime= new Date();
+                this.timer=Math.floor(currentTime - startTime)/1000;
+                console.log(this.timer);
+                this.taskCounter.innerText=`${this.timer}-`;
+            }
+        },1000)
+    }
+    
+    stopTracker(){
+        this.runTracker=false;
+    }
+}
+
+const timeTracker = new TimeTracker();
 
 setInterval(()=>{
     const date = new Date();
@@ -39,29 +65,19 @@ darkModeBtn.addEventListener("click", ()=>{
 })
 
 trackBtn.addEventListener("click", ()=>{
-    if(!runTracker)
+    if(!timeTracker.runTracker)
     {
         trackBtn.classList.remove("btn-success");
         trackBtn.classList.add("btn-danger");
         trackBtn.innerText="Stop";
-        startTracker("Foo");
-        runTracker=true;
+        timeTracker.startTracker("Foo");
     }
     else
     {
         trackBtn.classList.remove("btn-danger");
         trackBtn.classList.add("btn-success");
         trackBtn.innerText="Track";
-        startTracker("Foo");
-        runTracker=false;
+        timeTracker.stopTracker();
     }
-    
 })
 
-function startTracker(task){
-
-}
-
-function stopTracker(){
-
-}
