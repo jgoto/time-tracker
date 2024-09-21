@@ -19,3 +19,17 @@ body.light-mode{
 #mode-btns{
     width: 50%;
 }
+
+#main-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#left-container{
+    width: 40%;
+}
+
+#right-container{
+    width: 40%;
+}
