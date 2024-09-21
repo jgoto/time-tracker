@@ -1,6 +1,18 @@
 
 const lightModeBtn = document.getElementById("light-mode-btn");
 const darkModeBtn = document.getElementById("dark-mode-btn");
+const trackBtn = document.getElementById("track-btn");
+let runTracker=false;
+
+setInterval(()=>{
+    const date = new Date();
+    const hours = Number.parseInt(date.getHours() % 12 || 12);
+    const minutes = Number.parseInt(date.getMinutes());
+    const seconds = Number.parseInt(date.getSeconds());
+    const ampm = date.getHours()>12?"PM":"AM";
+    const timeSpan=document.getElementById("time-span");
+    timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`;
+}, 1000)
 
 lightModeBtn.addEventListener("click", ()=>{
     const body = document.querySelector("body")
@@ -26,12 +38,30 @@ darkModeBtn.addEventListener("click", ()=>{
     darkModeBtn.disabled=true;
 })
 
-setInterval(()=>{
-    const date = new Date();
-    const hours = Number.parseInt(date.getHours() % 12 || 12);
-    const minutes = Number.parseInt(date.getMinutes());
-    const seconds = Number.parseInt(date.getSeconds());
-    const ampm = date.getHours()>12?"PM":"AM";
-    const timeSpan=document.getElementById("time-span");
-    timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`;
-}, 1000)
+trackBtn.addEventListener("click", ()=>{
+    if(!runTracker)
+    {
+        trackBtn.classList.remove("btn-success");
+        trackBtn.classList.add("btn-danger");
+        trackBtn.innerText="Stop";
+        startTracker("Foo");
+        runTracker=true;
+    }
+    else
+    {
+        trackBtn.classList.remove("btn-danger");
+        trackBtn.classList.add("btn-success");
+        trackBtn.innerText="Track";
+        startTracker("Foo");
+        runTracker=false;
+    }
+    
+})
+
+function startTracker(task){
+
+}
+
+function stopTracker(){
+
+}
