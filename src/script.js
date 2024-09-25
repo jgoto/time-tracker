@@ -1,10 +1,11 @@
 const lightModeBtn = document.getElementById("light-mode-btn");
 const darkModeBtn = document.getElementById("dark-mode-btn");
 const trackBtn = document.getElementById("track-btn");
+const taskInput = document.getElementById("task-input");
 
 class TimeTracker{
     constructor(){
-        this.runTracker=false;
+        this.trackingItem=false;
         this.tasks = [];
         this.taskCounter = document.getElementById("task-counter");
         this.timer=0;
@@ -16,6 +17,7 @@ class TimeTracker{
         setInterval(()=>{
             this.currentTime = new Date();
             this.displayTime(this.currentTime);
+            this.updateTracker();
         }, 1000);
     }
 
@@ -28,22 +30,28 @@ class TimeTracker{
         timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`
     }
 
-    /*trackItem(task){
-        this.runTracker=true;
-        const startTime = new Date();
-        setInterval(()=>{
-            if(this.runTracker){
-                const currentTime= new Date();
-                this.timer=Math.floor((currentTime - startTime)/1000);
-                console.log(this.timer);
-                this.taskCounter.innerText=`${this.timer}-`;
-            }
-        },1000)
+    trackItem(task){
+        this.tasks.push(task);
+        console.log(this.tasks);
     }
-    
-    stopTracker(){
-        this.runTracker=false;
-    }*/
+
+    updateTracker(){
+        this.tasks.forEach(task => {
+            if(task.enabled){
+                task.elapsedTime=Math.floor((this.currentTime-task.startTime)/1000);
+                this.taskCounter.innerText=`${task.elapsedTime}`;
+            }
+        });
+    }
+
+    pauseTracking(){
+        this.tasks.forEach(task =>{
+            if(task.enabled){
+                task.enabled = false;
+                console.log(task)
+            }
+        })
+    }
 }
 
 const timeTracker = new TimeTracker();
@@ -73,19 +81,28 @@ darkModeBtn.addEventListener("click", ()=>{
 })
 
 trackBtn.addEventListener("click", ()=>{
-    if(!timeTracker.runTracker)
+    if(!timeTracker.trackingItem && taskInput.value!=="")
     {
         trackBtn.classList.remove("btn-success");
         trackBtn.classList.add("btn-danger");
         trackBtn.innerText="Stop";
-        timeTracker.startTracker("Foo");
+        timeTracker.trackItem({
+            id: "1",
+            description: taskInput.value,
+            startTime: timeTracker.currentTime,
+            elapsedTime: 0,
+            enabled: true
+        });
+        timeTracker.trackingItem=true;
     }
     else
     {
         trackBtn.classList.remove("btn-danger");
         trackBtn.classList.add("btn-success");
         trackBtn.innerText="Track";
-        timeTracker.stopTracker();
+        trackingItem=false;
+        taskInput.value="";
+        timeTracker.pauseTracking();
     }
 })
 
