@@ -8,15 +8,33 @@ class TimeTracker{
         this.tasks = [];
         this.taskCounter = document.getElementById("task-counter");
         this.timer=0;
+        this.currentTime = new Date();
+        this.startTracker();
     }
 
-    startTracker(task){
+    startTracker(){
+        setInterval(()=>{
+            this.currentTime = new Date();
+            this.displayTime(this.currentTime);
+        }, 1000);
+    }
+
+    displayTime(date){
+        const hours = Number.parseInt(date.getHours() % 12 || 12);
+        const minutes = Number.parseInt(date.getMinutes());
+        const seconds = Number.parseInt(date.getSeconds());
+        const ampm = date.getHours()>12?"PM":"AM";
+        const timeSpan=document.getElementById("time-span");
+        timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`
+    }
+
+    /*trackItem(task){
         this.runTracker=true;
         const startTime = new Date();
         setInterval(()=>{
             if(this.runTracker){
                 const currentTime= new Date();
-                this.timer=Math.floor(currentTime - startTime)/1000;
+                this.timer=Math.floor((currentTime - startTime)/1000);
                 console.log(this.timer);
                 this.taskCounter.innerText=`${this.timer}-`;
             }
@@ -25,20 +43,10 @@ class TimeTracker{
     
     stopTracker(){
         this.runTracker=false;
-    }
+    }*/
 }
 
 const timeTracker = new TimeTracker();
-
-setInterval(()=>{
-    const date = new Date();
-    const hours = Number.parseInt(date.getHours() % 12 || 12);
-    const minutes = Number.parseInt(date.getMinutes());
-    const seconds = Number.parseInt(date.getSeconds());
-    const ampm = date.getHours()>12?"PM":"AM";
-    const timeSpan=document.getElementById("time-span");
-    timeSpan.innerText=`${hours}:${minutes}:${seconds} ${ampm}`;
-}, 1000)
 
 lightModeBtn.addEventListener("click", ()=>{
     const body = document.querySelector("body")
