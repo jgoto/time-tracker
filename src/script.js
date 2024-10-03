@@ -8,6 +8,7 @@ class TimeTracker{
         this.trackingItem=false;
         this.tasks = [];
         this.taskCounter = document.getElementById("task-counter");
+        this.trackedIndex = "";
         this.timer=0;
         this.currentTime = new Date();
         this.startTracker();
@@ -32,6 +33,7 @@ class TimeTracker{
 
     trackItem(task){
         this.tasks.push(task);
+        this.trackedIndex=task.id;
         console.log(this.tasks);
     }
 
@@ -48,9 +50,11 @@ class TimeTracker{
         this.tasks.forEach(task =>{
             if(task.enabled){
                 task.enabled = false;
+                task.elapsedTime=Math.floor((this.currentTime-task.startTime)/1000)
                 console.log(task)
             }
         })
+        this.trackingItem=false;
     }
 }
 
