@@ -14,6 +14,11 @@ class TimeTracker{
         this.startTracker();
     }
 
+    generateTaskId(){
+        const taskId = Math.random().toString(16).substring(2, 12);
+        return taskId;
+    }
+
     startTracker(){
         setInterval(()=>{
             this.currentTime = new Date();
@@ -99,7 +104,7 @@ trackBtn.addEventListener("click", ()=>{
         trackBtn.classList.add("btn-info");
         trackBtn.innerText="Stop";
         timeTracker.trackItem({
-            id: "1",
+            id: timeTracker.generateTaskId(),
             description: taskInput.value,
             startTime: timeTracker.currentTime,
             elapsedTime: 0,
