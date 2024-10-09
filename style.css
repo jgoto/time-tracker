@@ -41,3 +41,8 @@ body.light-mode{
 #right-container{
     width: 40%;
 }
+
+#footer-container{
+    display: flex;
+    justify-content: end;
+}
